@@ -1,0 +1,124 @@
+{
+  "info": {
+    "_postman_id": "bf497a0d-4c28-4759-aebb-41a4e3fcaea5",
+    "name": "Rick and Morty API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52697780",
+    "_collection_link": "https://go.postman.co/collection/52697780-bf497a0d-4c28-4759-aebb-41a4e3fcaea5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET todos los personajes",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Test 1: Verificar que el servidor respondió correctamente\r",
+              "pm.test(\"El status code es 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// Test 2: Verificar que la respuesta contiene la estructura esperada\r",
+              "pm.test(\"La respuesta tiene resultados\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData).to.have.property(\"results\");\r",
+              "    pm.expect(jsonData.results).to.be.an(\"array\");\r",
+              "    pm.expect(jsonData.results.length).to.be.greaterThan(0);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/character",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "character"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET personaje por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/character/3",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "character",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET personajes filtrados por nombre",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GET todos los episodios",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GET todas las ubicaciones",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    }
+  ]
+}
