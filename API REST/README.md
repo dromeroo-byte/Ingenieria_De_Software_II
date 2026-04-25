@@ -33,11 +33,23 @@ No requiere autenticación. Es una API pública y abierta.
 
 ![Image 1](media/GET_todos_los_personajes.png)
 
-**GET todos los personajes**
+**GET personajes filtrados**
 
-![Image 1](media/GET_todos_los_personajes.png)
+![Image 2](media/GET_personajes_filtrados.png)
+
+**GET todos los episodios**
+
+![Image 3](media/GET_todos_los_episodios.png)
+
+**GET todas las ubicaciones**
+
+![Image 4](media/GET_todas_las_ubicaciones.png)
+
+**Tests GET todos los personajes**
+
+![Image 5](media/tests_GET_todos_los_personajes.png)
 
 **Tests GET personaje por ID**
 
-![Image 1](media/tests_GET_personaje_por_ID.png)
+![Image 6](media/tests_GET_personaje_por_ID.png)
 
