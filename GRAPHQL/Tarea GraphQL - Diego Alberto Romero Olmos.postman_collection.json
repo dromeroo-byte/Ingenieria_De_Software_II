@@ -1,0 +1,303 @@
+{
+  "info": {
+    "_postman_id": "e5a72eb7-194d-4f1d-9c93-efc40aede12c",
+    "name": "Tarea GraphQL - Diego Alberto Romero Olmos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52697780",
+    "_collection_link": "https://go.postman.co/collection/52697780-e5a72eb7-194d-4f1d-9c93-efc40aede12c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Query - Todos los países",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code es 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"La respuesta contiene el campo data\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"data\");\r",
+              "    pm.expect(json).to.not.have.property(\"errors\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Se reciben múltiples países\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.data.countries).to.be.an(\"array\");\r",
+              "    pm.expect(json.data.countries.length).to.be.greaterThan(100);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query TodosLosPaises {\r\n  countries {\r\n    code\r\n    name\r\n    capital\r\n    emoji\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{graphqlUrl}}",
+          "host": [
+            "{{graphqlUrl}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Query - País por código",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code es 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"No hay errores GraphQL en la respuesta\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.not.have.property(\"errors\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"El país retornado es Colombia\", function () {\r",
+              "    const country = pm.response.json().data.country;\r",
+              "    pm.expect(country.name).to.equal(\"Colombia\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Colombia tiene los campos esperados\", function () {\r",
+              "    const country = pm.response.json().data.country;\r",
+              "    pm.expect(country).to.have.property(\"capital\");\r",
+              "    pm.expect(country).to.have.property(\"currency\");\r",
+              "    pm.expect(country).to.have.property(\"emoji\");\r",
+              "    pm.expect(country.capital).to.equal(\"Bogotá\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query PaisPorCodigo {\r\n  country(code: \"CO\") {\r\n    name\r\n    capital\r\n    currency\r\n    phone\r\n    emoji\r\n    native\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{graphqlUrl}}",
+          "host": [
+            "{{graphqlUrl}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Query anidada- País con continente e idiomas",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code es 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"No hay errores GraphQL en la respuesta\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.not.have.property(\"errors\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Estados Unidos tiene continente e idiomas\", function () {\r",
+              "    const country = pm.response.json().data.country;\r",
+              "    pm.expect(country.name).to.equal(\"United States\");\r",
+              "    pm.expect(country.continent).to.have.property(\"name\");\r",
+              "    pm.expect(country.languages).to.be.an(\"array\");\r",
+              "    pm.expect(country.languages.length).to.be.greaterThan(0);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query PaisConRelaciones {\r\n  country(code: \"US\") {\r\n    name\r\n    capital\r\n    emoji\r\n    continent {\r\n      name\r\n      code\r\n    }\r\n    languages {\r\n      name\r\n      native\r\n      code\r\n    }\r\n    states {\r\n      name\r\n    }\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{graphqlUrl}}",
+          "host": [
+            "{{graphqlUrl}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Query - Continentes con países",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code es 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"No hay errores GraphQL en la respuesta\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.not.have.property(\"errors\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Se retornan exactamente 7 continentes\", function () {\r",
+              "    const continents = pm.response.json().data.continents;\r",
+              "    pm.expect(continents).to.be.an(\"array\");\r",
+              "    pm.expect(continents.length).to.equal(7);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cada continente tiene países anidados\", function () {\r",
+              "    const continents = pm.response.json().data.continents;\r",
+              "    continents.forEach(function(continent) {\r",
+              "        pm.expect(continent).to.have.property(\"countries\");\r",
+              "        pm.expect(continent.countries).to.be.an(\"array\");\r",
+              "        pm.expect(continent.countries.length).to.be.greaterThan(0);\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query ContinentesConPaises {\r\n  continents {\r\n    code\r\n    name\r\n    countries {\r\n      code\r\n      name\r\n      capital\r\n      emoji\r\n    }\r\n  }\r\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{graphqlUrl}}",
+          "host": [
+            "{{graphqlUrl}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Query con variables - País Dinámico",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code es 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"No hay errores GraphQL en la respuesta\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.not.have.property(\"errors\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"La variable fue procesada y devuelve un país\", function () {\r",
+              "    const country = pm.response.json().data.country;\r",
+              "    pm.expect(country).to.not.be.null;\r",
+              "    pm.expect(country).to.have.property(\"name\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"El país tiene continente e idiomas anidados\", function () {\r",
+              "    const country = pm.response.json().data.country;\r",
+              "    pm.expect(country.continent).to.be.an(\"object\");\r",
+              "    pm.expect(country.continent).to.have.property(\"name\");\r",
+              "    pm.expect(country.languages).to.be.an(\"array\");\r",
+              "    pm.expect(country.languages.length).to.be.greaterThan(0);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query PaisDinamico($codigo: ID!) {\r\n  country(code: $codigo) {\r\n    name\r\n    capital\r\n    currency\r\n    emoji\r\n    continent {\r\n      name\r\n    }\r\n    languages {\r\n      name\r\n    }\r\n  }\r\n}",
+            "variables": "{\r\n  \"codigo\": \"MX\"\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{graphqlUrl}}",
+          "host": [
+            "{{graphqlUrl}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "graphqlUrl",
+      "value": ""
+    }
+  ]
+}
