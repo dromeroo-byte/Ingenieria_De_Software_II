@@ -1,0 +1,49 @@
+<h1>Lista de tareas</h1>
+
+<div>
+
+  <input
+    type="text"
+    placeholder="Título"
+    [(ngModel)]="title"
+  >
+
+</div>
+
+<br>
+
+<div>
+
+  <textarea
+    placeholder="Descripción"
+    [(ngModel)]="description"
+  ></textarea>
+
+</div>
+
+<br>
+
+<button (click)="addTask()">
+  Agregar tarea
+</button>
+
+<hr>
+
+<div *ngFor="let task of tasks">
+
+  <h3>{{ task.title }}</h3>
+
+  <p>{{ task.description }}</p>
+
+  <small>
+    Creada:
+    {{ task.createdAt | date:'short' }}
+  </small>
+
+  <button (click)="deleteTask(task.id)">
+  Eliminar
+  </button>
+
+  <hr>
+
+</div>
