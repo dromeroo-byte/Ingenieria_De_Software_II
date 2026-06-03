@@ -1,0 +1,20 @@
+*.iml
+.gradle/
+/local.properties
+local.properties
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
+
+# Carpetas de compilación (se regeneran solas, no subir)
+build/
+*/build/
+app/build/
+
+# Carpeta de configuración del IDE
+.idea/
+
+# Claves y keystores (nunca subir)
+*.jks
+*.keystore
